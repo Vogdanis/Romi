@@ -5,30 +5,34 @@ import RPi.GPIO as GPIO
 motorDirPin = 20
 motorStepPin = 21
 motorDir = 0
-motorStepsPerRev = 200 
+motorStepsPerRev = 200
 
-# EndStops 
+# EndStops
 endstopHomePin = 26
 endstopEndPin = 19
 homeReached = 0
 
+
 def homeEndstopReached():
     homeReached = GPIO.input(endstopHomePin)
     if not homeReached:
-	print "HomeReached"
-        return 1	
+        print "HomeReached"
+        return 1
+
 
 def seekHome():
-    while homeReached is 0:
-	motorStep()
-	if  homeEndstopReached():
-            break;
+    while homeReached == 0:
+        motorStep()
+        if homeEndstopReached():
+            break
+
 
 def motorStep():
     GPIO.output(motorStepPin, GPIO.HIGH)
     sleep(delay)
     GPIO.output(motorStepPin, GPIO.LOW)
     sleep(delay)
+
 
 def changeDir():
     global motorDir
@@ -80,7 +84,7 @@ delay = .001
 
 while (1):
    command = raw_input("Waiting for command to process : \n")
-   processCommand(command)
+   processCommand(comman)
    
 
 
