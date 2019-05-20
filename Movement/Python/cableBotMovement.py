@@ -16,7 +16,7 @@ homeReached = 0
 def homeEndstopReached():
     homeReached = GPIO.input(endstopHomePin)
     if not homeReached:
-        print "HomeReached"
+        print("HomeReached")
         return 1
 
 
@@ -41,28 +41,28 @@ def changeDir():
 
 def debounceFromEndstop(steps):
     sleep(1)
-    print "Debounce from endstop"
+    print("Debounce from endstop")
     changeDir()
     for i in range(steps):
-	motorStep()
+        motorStep()
 
 def processCommand(command):
     if command is "h":
-        print "Homing....."
+        print("Homing.....")
         seekHome()
         debounceFromEndstop(100)
-    
+
     elif command is "f":
-        print "Going to end"
+        print("Going to end")
 
     elif command is "q":
-        print "Quitting."   
+        print("Quitting.") 
         GPIO.cleanup()
         exit()
 
     else:
-        print "Invalid command"   
- 
+        print("Invalid command")
+
 
 print("CableBot v0.1")
 
@@ -76,15 +76,15 @@ GPIO.setup(endstopEndPin, GPIO.OUT)
 GPIO.output(motorDirPin, motorDir)
 
 
-print "Motor direction is set to = " + str(motorDir)
-print "EndstopHome value is = " + str(GPIO.input(endstopHomePin))
-print "EndstopEnd value is = " + str(GPIO.input(endstopEndPin))
+print("Motor direction is set to = " + str(motorDir))
+print("EndstopHome value is = " + str(GPIO.input(endstopHomePin)))
+print("EndstopEnd value is = " + str(GPIO.input(endstopEndPin)))
 
 delay = .001
 
 while (1):
-   command = raw_input("Waiting for command to process : \n")
-   processCommand(comman)
-   
+    command = raw_input("Waiting for command to process : \n")
+    processCommand(command)
+
 
 
