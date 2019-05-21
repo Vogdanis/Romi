@@ -57,7 +57,7 @@ def processCommand(command):
         print("Going to end")
 
     elif command == "q":
-        print("Quitting.")
+        print("Quitting.") 
         GPIO.cleanup()
         exit()
 
@@ -67,7 +67,7 @@ def processCommand(command):
 
 print("CableBot v0.1")
 
-# Setup GPIO
+#Setup GPIO
 
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(motorDirPin, GPIO.OUT)
@@ -86,3 +86,6 @@ delay = .001
 while (1):
     command = raw_input("Waiting for command to process : \n")
     processCommand(command)
+
+
+
