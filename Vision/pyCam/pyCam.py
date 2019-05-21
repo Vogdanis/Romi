@@ -1,15 +1,16 @@
 from picamera import PiCamera
- from time import sleep
-# from datetime import datetime
-from time import gmtime, strftime
+import time
+#from datetime import datetime
+from time import gmtime, strftime, sleep
 import sys
+import os
 
-info = '\npyCam - If you want to take more than one picturen,\n'
+info = '\npyCam - If you want to take more than one picture,\n'
 info += 'give as first argument the number of pictures and,\n'
-info += 'second argument delay between them'
+info += 'second argument the delay between them\n'
 print(info)
-print('Number of arguments:', len(sys.argv), 'arguments')
-print('Argument list: ',  str(sys.argv))
+#print('Number of arguments:', len(sys.argv), 'arguments')
+#print('Argument list: ',  str(sys.argv))
 
 delayBetweenPictures = 0
 numOfPictures = 0
@@ -33,11 +34,40 @@ else:
     exit()
 
 dateTime = strftime("%Y-%m-%d %H:%M:%S", gmtime())
+#We will create a folder named after the DATE y-m-datetime
+#inside each folder(which is a date) we will put the images in format hour-minute-second
+folder_name = strftime("%Y-%m-%d",gmtime())
+picture_name = strftime("%H:%M:%S",gmtime())
+path = '/tmp/' + folder_name
+#Now we have to check if the folder exists
+#If it exists we will cd into it 
+#if not we will create it
+if(os.path.isdir(path)):
+   print("PathExists")
+else:
+    print("Path doesnt exist.")
+    os.mkdir(path)
+    print("Created path: ", path)
+
+os.chdir(path)
+print("Saving photos at: ", os.getcwd())
 cam = PiCamera()
 for i in range(0, numOfPictures):
     # cam.start_preview()
-    path = '/tmp/pyCam/' + str(dateTime)
-    path += '.jpg'
-    cam.capture(path)
+    picture_name = strftime("%H:%M:%S",gmtime())
+    fileName = picture_name + '.jpg' 
+    cam.capture(fileName)
+    print("Saved photo as: ", fileName)
     # cam.stop_preview()
     time.sleep(delayBetweenPictures)
+
+
+#
+#cam = PiCamera()
+#for i in range(0, numOfPictures):
+#    # cam.start_preview()
+#    path = '/tmp/pyCam/' + str(dateTime)
+#    path += '.jpg'
+#    cam.capture(path)
+#    # cam.stop_preview()
+#    time.sleep(delayBetweenPictures)
